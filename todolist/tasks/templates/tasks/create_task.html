@@ -1,4 +1,4 @@
-{% load forms_extras %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +17,6 @@
 
         <div class="mb-3">
             <label for="id_title" class="form-label">Task Title</label>
-            {{ form.title|add_class:"form-control" }}
             {% if form.title.errors %}
             <div class="text-danger">
                 {% for error in form.title.errors %}
@@ -29,7 +28,7 @@
 
         <div class="mb-3">
             <label for="id_description" class="form-label">Description</label>
-            {{ form.description|add_class:"form-control" }}
+
             {% if form.description.errors %}
             <div class="text-danger">
                 {% for error in form.description.errors %}
@@ -41,7 +40,7 @@
 
         <div class="mb-3">
             <label for="id_due_date" class="form-label">Due Date</label>
-            {{ form.due_date|add_class:"form-control" }}
+
             {% if form.due_date.errors %}
             <div class="text-danger">
                 {% for error in form.due_date.errors %}

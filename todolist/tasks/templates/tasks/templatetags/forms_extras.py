@@ -1,8 +1,9 @@
 from django import template
+from crispy_forms.utils import render_crispy_form
 
 register = template.Library()
 
 
 @register.filter
-def add_class(value, class_name):
-    return value.as_widget(attrs={"class": class_name})
+def crispy(value):
+    return render_crispy_form(value)
