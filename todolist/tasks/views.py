@@ -7,9 +7,11 @@ def home(request):
     tasks = Task.objects.all()
     return render(request, "tasks/home.html", {"tasks": tasks})
 
+
 def tag_list(request):
     tags = Tag.objects.all()
     return render(request, "tasks/tag_list.html", {"tags": tags})
+
 
 def create_task(request):
     if request.method == "POST":
@@ -21,6 +23,7 @@ def create_task(request):
         form = TaskForm()
     return render(request, "tasks/create_task.html", {"form": form})
 
+
 def create_tag(request):
     if request.method == "POST":
         form = TagForm(request.POST)
@@ -30,6 +33,7 @@ def create_tag(request):
     else:
         form = TagForm()
     return render(request, "tasks/create_tag.html", {"form": form})
+
 
 def update_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
@@ -42,10 +46,12 @@ def update_task(request, task_id):
         form = TaskForm(instance=task)
     return render(request, "tasks/create_task.html", {"form": form})
 
+
 def delete_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
     task.delete()
     return redirect("home")
+
 
 def toggle_task_status(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
