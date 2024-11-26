@@ -35,6 +35,12 @@ A tag can be associated with multiple tasks, and a task can have multiple tags.
 
 ### Prerequisites
 
-- Python 3.8 or higher
-- Django 5.3# todo_list
-- 
+- Python 3.13 or higher
+- Django 5.1.3# todo_list
+
+## Skrinshots
+
+- https://github.com/Viacheslav417865/todo_list/blob/dev/todolist/tasks/templates/static/skrinshot/Todo%20list.png
+
+- https://github.com/Viacheslav417865/todo_list/blob/dev/todolist/tasks/templates/static/skrinshot/Tags.png
+
