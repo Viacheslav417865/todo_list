@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 style="display: flex; justify-content: space-between; align-items: center;">
+    Tags
+    <a href="{% url 'tasks:tag_list' %}" class="btn btn-primary link-to-page">
+        Add
+    </a>
+</h1>
+<h2 style="font-size: 1.3em; display: flex; justify-content: space-between; align-items: center;">
+    Name
+    <span style="font-weight: bold;" href="{% url 'tasks:tag_list' %}" class="btn btn-secondary link-to-page">Update</span>
+    <span style="font-weight: bold;" href="{% url 'tasks:tag_list' %}" class="btn btn-secondary link-to-page">Delete</span>
+</h2>
+<h3 style="font-size: 1.3em; display: flex; justify-content: space-between; align-items: center;">
+    home
+    <span style="font-weight: bold;" href="{% url 'tasks:tag_list' %}" class="btn btn-secondary link-to-page">Update</span>
+    <span style="font-weight: bold;" href="{% url 'tasks:tag_list' %}" class="btn btn-secondary link-to-page">Delete</span>
+</h3>
+<h4 style="font-size: 1.3em; display: flex; justify-content: space-between; align-items: center;">
+    work
+    <span style="font-weight: bold;" href="{% url 'tasks:tag_list' %}" class="btn btn-secondary link-to-page">Update</span>
+    <span style="font-weight: bold;" href="{% url 'tasks:tag_list' %}" class="btn btn-secondary link-to-page">Delete</span>
+</h4>
+<h5 style="font-size: 1.3em; display: flex; justify-content: space-between; align-items: center;">
+    shop
+    <span style="font-weight: bold;" href="{% url 'tasks:tag_list' %}" class="btn btn-secondary link-to-page">Update</span>
+    <span style="font-weight: bold;" href="{% url 'tasks:tag_list' %}" class="btn btn-secondary link-to-page">Delete</span>
+</h5>
+{% if tag_list %}
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for tag in tag_list %}
+    <tr>
+        <td>{{ tag.name }}</td>
+        <td>
+            <a href="{% url 'tag-update' pk=tag.id %}" class="btn btn btn-secondary btn-sm">Update</a>
+        </td>
+        <td>
+            <a href="{% url 'tag-delete' pk=tag.id %}" class="btn btn btn-secondary btn-sm">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+
+{% endif %}
+{% endblock %}

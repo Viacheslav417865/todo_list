@@ -1,0 +1,28 @@
+
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h1>Task Toggle Example</h1>
+
+  <ul>
+    {% for task in task_list %}
+      <li>
+        <p>{{ task.title }} -
+          {% if task.is_done %}
+            <span style="color: green;">Done</span>
+          {% else %}
+            <span style="color: red;">Not Done</span>
+          {% endif %}
+        </p>
+        <a href="{% url 'tasks:task-toggle' pk=task.id %}" class="btn btn-secondary">
+          {% if task.is_done %}
+            Undo
+          {% else %}
+            Mark as Done
+          {% endif %}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

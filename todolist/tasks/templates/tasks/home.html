@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 style="display: flex; justify-content: space-between; align-items: center;">
+    TODO list
+    <a href="{% url 'tasks:task_create' %}" class="btn btn-primary link-to-page">
+        Add task
+    </a>
+</h1>
+
+<h2 style="font-size: 1.3em; display: flex; justify-content: space-between; align-items: center;">
+    Buy 3 carrots and 1 pineapple
+    <span style="color: red; font-weight: bold;">Not done</span>
+    <a href="{% url 'tasks:task_create' %}" class="btn btn-success link-to-page">
+        Complete
+    </a>
+</h2>
+<h3 style="font-size: 1.0em; display: flex; justify-content: space-between; align-items: center;">
+    Created: November 26, 2024, 16:05 p.m Deadline: November 26, 2024, 16:05 p.m
+</h3>
+
+<h4 style="font-size: 1.0em; display: flex; justify-content: space-between; align-items: center;">
+    <p>Tags:
+        <span>shop</span>
+        <a href="/tasks/1/update/">Update</a>
+        <a href="/tasks/1/delete/">Delete</a>
+    </p>
+</h4>
+<h5>
+    <p>Task ID: {{ task.id }}</p>
+    <p style="font-size: 1.1em; display: flex; justify-content: space-between; align-items: center;">
+        Clean windows
+        <span style="color: green; font-weight: bold;">Done</span>
+        {% if task.id %}
+        <a href="{% url 'tasks:task-toggle' pk=task.id %}" class="btn btn-secondary link-to-page">
+            <span style="color: green; font-weight: bold;">Undo</span>
+        </a>
+        {% else %}
+        <span class="btn btn-secondary link-to-page">Undo</span>
+        {% endif %}
+    </p>
+</h5>
+<h6 style="font-size: 1.0em; display: flex; justify-content: space-between; align-items: center;">
+    Created: November 26, 2024, 16:07 p.m Deadline: November 26, 2024, 16:07 p.m
+</h6>
+<h7>
+    <p>Tags:
+        <span>home shop</span>
+        <a href="/tasks/1/update/">Update</a>
+        <a href="/tasks/1/delete/">Delete</a>
+    </p>
+</h7>
+<h8 style="font-size: 1.3em; display: flex; justify-content: space-between; align-items: center;">
+    <span>Complete project</span>
+    <span style="color: green; font-weight: bold;">Done</span>
+    {% if task.id %}
+        <a href="{% url 'tasks:task-toggle' pk=task.id %}" class="btn btn-secondary link-to-page">
+            <span style="color: green; font-weight: bold;">Undo</span>
+        </a>
+    {% else %}
+        <span class="btn btn-secondary link-to-page">Undo</span>
+    {% endif %}
+</h8>
+<h9 style="font-size: 1.0em; display: flex; justify-content: space-between; align-items: center;">
+    Created: November 26, 2024, 16:09 p.m Deadline: November 26, 2024, 16:09 p.m
+</h9>
+<h10>
+    <p>Tags:
+        <span>home shop</span>
+        <a href="/tasks/1/update/">Update</a>
+        <a href="/tasks/1/delete/">Delete</a>
+    </p>
+</h10>
+
+{% if task_list %}
+<ul style="list-style-type: none; padding: 0;">
+    {% for task in task_list %}
+    <li style="border-bottom: 1px solid #ddd; padding: 10px 0;">
+        <p>
+            <span style="color: black; font-weight: bold;">{{ task.title }}</span>
+            {% if task.is_done %}
+            <span style="color: green; font-weight: bold;">done</span>
+            <a href="{% url 'tasks:task_toggle' pk=task.id %}" class="btn btn-secondary link-to-page">Undo</a>
+            {% else %}
+            <span style="color: red; font-weight: bold;">not done</span>
+            <a href="{% url 'tasks:task_toggle' pk=task.id %}" class="btn btn-success link-to-page">Complete</a>
+            {% endif %}
+        </p>
+        <p>Created: {{ task.created_at|date:"F d, Y, h:i a" }}</p>
+        <p>Tags:
+            {% for tag in task.tags.all %}
+            <span>{{ tag.name }}</span>{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+            <a href="{% url 'tasks:task_update' pk=task.id %}">Update</a>
+            <a href="{% url 'tasks:task_delete' pk=task.id %}">Delete</a>
+        </p>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+{% endif %}
+{% endblock %}
