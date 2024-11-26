@@ -40,8 +40,14 @@ A tag can be associated with multiple tasks, and a task can have multiple tags.
 
 ## Skrinshots
 
+TODO list
+
 ![Todo list](https://github.com/Viacheslav417865/todo_list/blob/dev/todolist/tasks/templates/static/skrinshot/Todo%20list.png?raw=true)
 
-![Tags](https://github.com/Viacheslav417865/todo_list/blob/dev/todolist/tasks/templates/static/skrinshot/Tags.png?raw=true)
+
+Tags
+
+![Tags](https://github.com/Viacheslav417865/todo_list/blob/dev/todolist/tasks/templates/static/skrinshot/Tags%20list.png?raw=true)
+
 
 
