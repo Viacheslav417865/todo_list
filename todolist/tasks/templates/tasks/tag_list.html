@@ -1,115 +1,56 @@
-{% load crispy_forms_tags %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tags</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
+{% extends "base.html" %}
 
-        #sidebar {
-            width: 200px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100%;
-            background-color: #333;
-            padding-top: 20px;
-        }
-
-        #sidebar a {
-            color: white;
-            padding: 15px;
-            text-decoration: none;
-            display: block;
-        }
-
-        #sidebar a:hover {
-            background-color: #575757;
-        }
-
-        #main-content {
-            margin-left: 220px;
-            padding: 20px;
-        }
-
-        h1 {
-            font-size: 24px;
-        }
-
-        .tag {
-            background: #fff;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .tag-actions button {
-            padding: 5px 10px;
-            border: none;
-            background-color: #007BFF;
-            color: white;
-            cursor: pointer;
-            border-radius: 3px;
-        }
-
-        .tag-actions button:hover {
-            background-color: #0056b3;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .buttons a {
-            text-decoration: none;
-        }
-
-    </style>
-</head>
-<body>
-
-<div id="sidebar">
-    <a href="{% url 'home' %}">Home</a>
-    <a href="{% url 'tag_list' %}">Tags</a>
-</div>
-
-<div id="main-content">
-    <h1>Tags</h1>
-    <a href="{% url 'add_tag' %}">
-        <button>Add Tag</button>
+{% block content %}
+<h1 style="display: flex; justify-content: space-between; align-items: center;">
+    Tags
+    <a href="{% url 'tasks:tag_list' %}" class="btn btn-primary link-to-page">
+        Add
     </a>
-    {% csrf_token %}
-    {{ form|crispy }}
-    <div class="tag-list">
-        {% for tag in tags %}
-        <div class="tag">
-            <p>{{ tag.name }}</p>
-            <div class="tag-actions">
-                <a href="{% url 'update_tag' tag.id %}">
-                    <button>Update</button>
-                </a>
-                <a href="{% url 'delete_tag' tag.id %}">
-                    <button>Delete</button>
-                </a>
-            </div>
-        </div>
-        {% empty %}
-        <p>No tags available.</p>
-        {% endfor %}
-    </div>
-</div>
+</h1>
+<h2 style="font-size: 1.3em; display: flex; justify-content: space-between; align-items: center;">
+    Name
+    <span style="font-weight: bold;" href="{% url 'tasks:tag_list' %}" class="btn btn-secondary link-to-page">Update</span>
+    <span style="font-weight: bold;" href="{% url 'tasks:tag_list' %}" class="btn btn-secondary link-to-page">Delete</span>
+</h2>
+<h3 style="font-size: 1.3em; display: flex; justify-content: space-between; align-items: center;">
+    home
+    <span style="font-weight: bold;" href="{% url 'tasks:tag_list' %}" class="btn btn-secondary link-to-page">Update</span>
+    <span style="font-weight: bold;" href="{% url 'tasks:tag_list' %}" class="btn btn-secondary link-to-page">Delete</span>
+</h3>
+<h4 style="font-size: 1.3em; display: flex; justify-content: space-between; align-items: center;">
+    work
+    <span style="font-weight: bold;" href="{% url 'tasks:tag_list' %}" class="btn btn-secondary link-to-page">Update</span>
+    <span style="font-weight: bold;" href="{% url 'tasks:tag_list' %}" class="btn btn-secondary link-to-page">Delete</span>
+</h4>
+<h5 style="font-size: 1.3em; display: flex; justify-content: space-between; align-items: center;">
+    shop
+    <span style="font-weight: bold;" href="{% url 'tasks:tag_list' %}" class="btn btn-secondary link-to-page">Update</span>
+    <span style="font-weight: bold;" href="{% url 'tasks:tag_list' %}" class="btn btn-secondary link-to-page">Delete</span>
+</h5>
+{% if tag_list %}
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for tag in tag_list %}
+    <tr>
+        <td>{{ tag.name }}</td>
+        <td>
+            <a href="{% url 'tag-update' pk=tag.id %}" class="btn btn btn-secondary btn-sm">Update</a>
+        </td>
+        <td>
+            <a href="{% url 'tag-delete' pk=tag.id %}" class="btn btn btn-secondary btn-sm">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
 
-</body>
-</html>
+{% endif %}
+{% endblock %}

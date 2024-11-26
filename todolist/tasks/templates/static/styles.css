@@ -1,0 +1,89 @@
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-task-btn {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.task-list {
+    margin-top: 20px;
+}
+
+.task {
+    padding: 20px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.status.done {
+    color: green;
+}
+
+.status.not-done {
+    color: red;
+}
+
+.task-actions .btn {
+    padding: 10px;
+    margin-right: 5px;
+    text-decoration: none;
+    color: white;
+    background-color: #007bff;
+    border-radius: 5px;
+}
+
+.task-actions .delete-btn {
+    background-color: #dc3545;
+}
+
+.tags {
+    margin-top: 10px;
+}
+
+.tag {
+    background-color: #f1f1f1;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 5px;
+}
+
+.todo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.link-to-page {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.task-title, .no-tasks {
+    font-size: 1.5em;
+}
+
+.task-title {
+    font-weight: bold;
+    color: black;
+}
+
+.no-tasks {
+    color: #888;
+}

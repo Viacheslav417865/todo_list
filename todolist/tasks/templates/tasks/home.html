@@ -1,152 +1,102 @@
-{% load crispy_forms_tags %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo List</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
+{% extends "base.html" %}
 
-        #sidebar {
-            width: 200px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100%;
-            background-color: #333;
-            padding-top: 20px;
-        }
+{% block content %}
+<h1 style="display: flex; justify-content: space-between; align-items: center;">
+    TODO list
+    <a href="{% url 'tasks:task_create' %}" class="btn btn-primary link-to-page">
+        Add task
+    </a>
+</h1>
 
-        #sidebar a {
-            color: white;
-            padding: 15px;
-            text-decoration: none;
-            display: block;
-        }
+<h2 style="font-size: 1.3em; display: flex; justify-content: space-between; align-items: center;">
+    Buy 3 carrots and 1 pineapple
+    <span style="color: red; font-weight: bold;">Not done</span>
+    <a href="{% url 'tasks:task_create' %}" class="btn btn-success link-to-page">
+        Complete
+    </a>
+</h2>
+<h3 style="font-size: 1.0em; display: flex; justify-content: space-between; align-items: center;">
+    Created: November 26, 2024, 16:05 p.m Deadline: November 26, 2024, 16:05 p.m
+</h3>
 
-        #sidebar a:hover {
-            background-color: #575757;
-        }
+<h4 style="font-size: 1.0em; display: flex; justify-content: space-between; align-items: center;">
+    <p>Tags:
+        <span>shop</span>
+        <a href="/tasks/1/update/">Update</a>
+        <a href="/tasks/1/delete/">Delete</a>
+    </p>
+</h4>
+<h5>
+    <p>Task ID: {{ task.id }}</p>
+    <p style="font-size: 1.1em; display: flex; justify-content: space-between; align-items: center;">
+        Clean windows
+        <span style="color: green; font-weight: bold;">Done</span>
+        {% if task.id %}
+        <a href="{% url 'tasks:task-toggle' pk=task.id %}" class="btn btn-secondary link-to-page">
+            <span style="color: green; font-weight: bold;">Undo</span>
+        </a>
+        {% else %}
+        <span class="btn btn-secondary link-to-page">Undo</span>
+        {% endif %}
+    </p>
+</h5>
+<h6 style="font-size: 1.0em; display: flex; justify-content: space-between; align-items: center;">
+    Created: November 26, 2024, 16:07 p.m Deadline: November 26, 2024, 16:07 p.m
+</h6>
+<h7>
+    <p>Tags:
+        <span>home shop</span>
+        <a href="/tasks/1/update/">Update</a>
+        <a href="/tasks/1/delete/">Delete</a>
+    </p>
+</h7>
+<h8 style="font-size: 1.3em; display: flex; justify-content: space-between; align-items: center;">
+    <span>Complete project</span>
+    <span style="color: green; font-weight: bold;">Done</span>
+    {% if task.id %}
+        <a href="{% url 'tasks:task-toggle' pk=task.id %}" class="btn btn-secondary link-to-page">
+            <span style="color: green; font-weight: bold;">Undo</span>
+        </a>
+    {% else %}
+        <span class="btn btn-secondary link-to-page">Undo</span>
+    {% endif %}
+</h8>
+<h9 style="font-size: 1.0em; display: flex; justify-content: space-between; align-items: center;">
+    Created: November 26, 2024, 16:09 p.m Deadline: November 26, 2024, 16:09 p.m
+</h9>
+<h10>
+    <p>Tags:
+        <span>home shop</span>
+        <a href="/tasks/1/update/">Update</a>
+        <a href="/tasks/1/delete/">Delete</a>
+    </p>
+</h10>
 
-        #main-content {
-            margin-left: 220px;
-            padding: 20px;
-        }
-
-        h1 {
-            font-size: 24px;
-        }
-
-        .task {
-            background: #fff;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .task-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .task-header p {
-            margin: 0;
-        }
-
-        .task-body {
-            margin-top: 10px;
-        }
-
-        .task-footer {
-            margin-top: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .task-footer a {
-            text-decoration: none;
-            color: #007BFF;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .buttons button {
-            padding: 5px 10px;
-            border: none;
-            background-color: #007BFF;
-            color: white;
-            cursor: pointer;
-            border-radius: 3px;
-        }
-
-        .buttons button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-
-<div id="sidebar">
-    <a href="{% url 'home' %}">Home</a>
-    <a href="{% url 'tag_list' %}">Tags</a>
-</div>
-
-<div id="main-content">
-    <h1>TODO List <a href="{% url 'add_task' %}">
-        <button>Add Task</button>
-    </a></h1>
-
-    {% csrf_token %}
-    {{ form|crispy }}
-
-    {% for task in tasks %}
-    <div class="task">
-        <div class="task-header">
-            <p><strong>{{ task.content }}</strong></p>
-            <p>
-                {% if task.is_done %}
-                <button onclick="window.location.href='{% url 'toggle_task' task.id %}'">Undo</button>
-                {% else %}
-                <button onclick="window.location.href='{% url 'toggle_task' task.id %}'">Complete</button>
-                {% endif %}
-            </p>
-        </div>
-        <div class="task-body">
-            <p>Created: {{ task.created_at|date:"F j, Y, g:i a" }}</p>
-            {% if task.deadline %}
-            <p>Deadline: {{ task.deadline|date:"F j, Y, g:i a" }}</p>
+{% if task_list %}
+<ul style="list-style-type: none; padding: 0;">
+    {% for task in task_list %}
+    <li style="border-bottom: 1px solid #ddd; padding: 10px 0;">
+        <p>
+            <span style="color: black; font-weight: bold;">{{ task.title }}</span>
+            {% if task.is_done %}
+            <span style="color: green; font-weight: bold;">done</span>
+            <a href="{% url 'tasks:task_toggle' pk=task.id %}" class="btn btn-secondary link-to-page">Undo</a>
+            {% else %}
+            <span style="color: red; font-weight: bold;">not done</span>
+            <a href="{% url 'tasks:task_toggle' pk=task.id %}" class="btn btn-success link-to-page">Complete</a>
             {% endif %}
-        </div>
-        <div class="task-footer">
-            <p>Tags:
-                {% for tag in task.tags.all %}
-                {{ tag.name }}{% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            </p>
-            <div class="buttons">
-                <a href="{% url 'update_task' task.id %}">
-                    <button>Update</button>
-                </a>
-                <a href="{% url 'delete_task' task.id %}">
-                    <button>Delete</button>
-                </a>
-            </div>
-        </div>
-    </div>
+        </p>
+        <p>Created: {{ task.created_at|date:"F d, Y, h:i a" }}</p>
+        <p>Tags:
+            {% for tag in task.tags.all %}
+            <span>{{ tag.name }}</span>{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+            <a href="{% url 'tasks:task_update' pk=task.id %}">Update</a>
+            <a href="{% url 'tasks:task_delete' pk=task.id %}">Delete</a>
+        </p>
+    </li>
     {% endfor %}
-</div>
-
-</body>
-</html>
+</ul>
+{% else %}
+{% endif %}
+{% endblock %}

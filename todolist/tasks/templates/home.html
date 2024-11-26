@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 style="display: flex; justify-content: space-between; align-items: center;">
+    TODO list
+    <a href="{% url 'tasks:task_create' %}" class="btn btn-primary link-to-page">
+        Add task
+    </a>
+</h1>
+
+<h2 style="font-size: 1.5em; display: flex; justify-content: space-between; align-items: center;">
+    Buy 3 carrots and 1 pineapple
+    <span style="color: red; font-weight: bold;">Not done</span>
+    <a href="{% url 'tasks:task_create' %}" class="btn btn-success link-to-page">
+        Complete
+    </a>
+</h2>
+<h3 style="font-size: 1.5em; display: flex; justify-content: space-between; align-items: center;">
+    Created: {{ task.created_at|date:"F d, Y, h:i a" }}
+</h3>
+<h4>
+    <p>Tags:
+        <span>shop</span>
+        <a href="/tasks/1/update/">Update</a>
+        <a href="/tasks/1/delete/">Delete</a>
+    </p>
+</h4>
+<h5>
+    <p>Clean windows
+        <span style="color: green; font-weight: bold;">Done</span>
+        {% if task.id %}
+        <a href="{% url 'tasks:task-toggle' pk=task.id %}" class="btn btn-secondary link-to-page">Undo</a>
+        {% else %}
+    <p>Task has no ID</p>
+    {% endif %}
+    </p>
+</h5>
+{% if task_list %}
+<ul style="list-style-type: none; padding: 0;">
+    {% for task in task_list %}
+    <li style="border-bottom: 1px solid #ddd; padding: 10px 0;">
+        <p>
+            <span style="color: black; font-weight: bold;">{{ task.title }}</span>
+            {% if task.is_done %}
+            <span style="color: green; font-weight: bold;">done</span>
+            <a href="{% url 'tasks:task_toggle' pk=task.id %}" class="btn btn-secondary link-to-page">Undo</a>
+            {% else %}
+            <span style="color: red; font-weight: bold;">not done</span>
+            <a href="{% url 'tasks:task_toggle' pk=task.id %}" class="btn btn-success link-to-page">Complete</a>
+            {% endif %}
+        </p>
+        <p>Created: {{ task.created_at|date:"F d, Y, h:i a" }}</p>
+        <p>Tags:
+            {% for tag in task.tags.all %}
+            <span>{{ tag.name }}</span>{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+            <a href="{% url 'tasks:task_update' pk=task.id %}">Update</a>
+            <a href="{% url 'tasks:task_delete' pk=task.id %}">Delete</a>
+        </p>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p style="font-size: 1.5em;">There are no tasks in List</p>
+{% endif %}
+{% endblock %}
