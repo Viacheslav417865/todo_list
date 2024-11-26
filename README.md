@@ -47,7 +47,6 @@ TODO list
 
 Tags
 
-![Tags](https://github.com/Viacheslav417865/tags/blob/dev/todolist/tasks/templates/static/skrinshot/Tags%20list.png?raw=true)
-
+![Tags](https://github.com/Viacheslav417865/todo_list/blob/dev/todolist/tasks/templates/static/skrinshot/Tags.png)
 
 
